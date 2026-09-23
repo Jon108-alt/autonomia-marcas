@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autonomia de Marcas</title>
+<style>
+  :root {
+    color-scheme: light;
+    --plano: #f9f9f7;
+    --superficie: #fcfcfb;
+    --ink-1: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-3: #898781;
+    --grade: #e1e0d9;
+    --eixo: #c3c2b7;
+    --borda: rgba(11,11,11,0.10);
+    --s1: #2a78d6;
+    --s2: #eb6834;
+    --s3: #1baf7a;
+    --bom: #0ca30c;
+    --atencao: #fab219;
+    --grave: #ec835a;
+    --critico: #d03b3b;
+    --seq-1: #cde2fb; --seq-2: #9ec5f4; --seq-3: #5598e7;
+    --seq-4: #2a78d6; --seq-5: #1c5cab; --seq-6: #104281;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --plano: #0d0d0d; --superficie: #1a1a19;
+      --ink-1: #ffffff; --ink-2: #c3c2b7; --ink-3: #898781;
+      --grade: #2c2c2a; --eixo: #383835; --borda: rgba(255,255,255,0.10);
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+      --seq-1: #184f95; --seq-2: #1c5cab; --seq-3: #256abf;
+      --seq-4: #3987e5; --seq-5: #6da7ec; --seq-6: #b7d3f6;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--plano); color: var(--ink-1);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  .envelope { max-width: 1180px; margin: 0 auto; padding: 32px 16px 72px; }
+  header h1 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--ink-2); font-size: 0.875rem; }
+  .abas { display: flex; gap: 4px; margin: 24px 0 20px; border-bottom: 1px solid var(--borda); }
+  .abas button {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    padding: 10px 16px; font: inherit; font-weight: 500; color: var(--ink-2);
+    cursor: pointer; margin-bottom: -1px;
+  }
+  .abas button[aria-selected="true"] { color: var(--ink-1); border-bottom-color: var(--s1); }
+  .abas button:hover { color: var(--ink-1); }
+  .cartao {
+    background: var(--superficie); border: 1px solid var(--borda);
+    border-radius: 10px; padding: 20px; margin-bottom: 20px;
+  }
+  .cartao h2 { font-size: 1rem; margin: 0 0 2px; }
+  .cartao p.sub { margin: 0 0 18px; color: var(--ink-3); font-size: 0.8125rem; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: var(--superficie); border: 1px solid var(--borda); border-radius: 10px; padding: 16px; }
+  .kpi .rotulo { font-size: 0.75rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em; }
+  .kpi .valor { font-size: 1.75rem; font-weight: 600; margin-top: 4px; }
+  .kpi .nota { font-size: 0.8125rem; color: var(--ink-2); }
+  .legenda { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; font-size: 0.8125rem; color: var(--ink-2); }
+  .legenda span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--grade); }
+  th { color: var(--ink-3); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8125rem; white-space: nowrap; }
+  .grafico { width: 100%; overflow-x: auto; }
+  svg { display: block; max-width: 100%; }
+  svg text { font-family: inherit; }
+  .dica {
+    position: fixed; pointer-events: none; opacity: 0; transition: opacity .1s;
+    background: var(--superficie); border: 1px solid var(--borda); border-radius: 8px;
+    padding: 8px 10px; font-size: 0.8125rem; box-shadow: 0 6px 20px rgba(0,0,0,.14);
+    z-index: 50; max-width: 260px;
+  }
+  .dica b { display: block; margin-bottom: 2px; }
+  .dica .linha { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .oculto { display: none; }
+  .aviso { background: var(--superficie); border: 1px solid var(--borda); border-left: 3px solid var(--atencao);
+           border-radius: 8px; padding: 14px 16px; font-size: 0.875rem; color: var(--ink-2); }
+  details summary { cursor: pointer; font-size: 0.8125rem; color: var(--ink-2); margin-top: 10px; }
+  @media (max-width: 600px) { .envelope { padding: 20px 16px 56px; } .kpi .valor { font-size: 1.5rem; } }
+</style>
+</head>
+<body>
+<div class="envelope">
+  <header>
+    <h1>Autonomia de Marcas</h1>
+    <p id="atualizado">Carregando…</p>
+  </header>
+
+  <div class="abas" role="tablist">
+    <button role="tab" aria-selected="true" data-aba="autonomia">Autonomia das marcas</button>
+    <button role="tab" aria-selected="false" data-aba="backoffice">Backoffice / aprovação de NF</button>
+  </div>
+
+  <section id="aba-autonomia"></section>
+  <section id="aba-backoffice" class="oculto"></section>
+</div>
+<div class="dica" id="dica"></div>
+
+<script>
+"use strict";
+
+const FONTE = "dashboard.json";
+const ETAPAS_ORDEM = ["recebimento_po", "atualizacao_status", "upload_nf", "agendamento_coleta"];
+const SEQ = ["--seq-1","--seq-2","--seq-3","--seq-4","--seq-5","--seq-6"];
+
+const cor = (nome) => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+const num = (v, casas = 1) => (v === null || v === undefined || Number.isNaN(v)) ? "—" : Number(v).toFixed(casas);
+const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function horas(v) {
+  if (v === null || v === undefined) return "—";
+  if (v < 24) return num(v, 1) + " h";
+  return num(v / 24, 1) + " d";
+}
+
+function corDaClassificacao(classificacao) {
+  if (classificacao === "Autônomo") return "--bom";
+  if (classificacao === "Parcialmente autônomo") return "--atencao";
+  return "--critico";
+}
+const ICONE = { "Autônomo": "●", "Parcialmente autônomo": "◐", "Em treinamento/suporte": "○" };
+
+// --------------------------------------------------------------------- dica
+const dica = document.getElementById("dica");
+function mostrarDica(evento, titulo, linhas) {
+  dica.innerHTML = "<b>" + esc(titulo) + "</b>" +
+    linhas.map((l) => '<div class="linha">' + esc(l) + "</div>").join("");
+  dica.style.opacity = "1";
+  const largura = dica.offsetWidth, altura = dica.offsetHeight;
+  let x = evento.clientX + 14, y = evento.clientY + 14;
+  if (x + largura > window.innerWidth - 8) x = evento.clientX - largura - 14;
+  if (y + altura > window.innerHeight - 8) y = evento.clientY - altura - 14;
+  dica.style.left = x + "px";
+  dica.style.top = y + "px";
+}
+function esconderDica() { dica.style.opacity = "0"; }
+
+function ligarDica(elemento, titulo, linhas) {
+  elemento.addEventListener("mousemove", (e) => mostrarDica(e, titulo, linhas));
+  elemento.addEventListener("mouseleave", esconderDica);
+  elemento.setAttribute("tabindex", "0");
+  elemento.addEventListener("focus", (e) => {
+    const r = elemento.getBoundingClientRect();
+    mostrarDica({ clientX: r.left + r.width / 2, clientY: r.top }, titulo, linhas);
+  });
+  elemento.addEventListener("blur", esconderDica);
+}
+
+// ------------------------------------------------------------------ helpers
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs = {}) {
+  const node = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+  return node;
+}
+function texto(x, y, conteudo, opcoes = {}) {
+  const t = el("text", {
+    x, y, fill: cor(opcoes.cor || "--ink-2"),
+    "font-size": opcoes.tamanho || 12,
+    "text-anchor": opcoes.ancora || "start",
+    "dominant-baseline": opcoes.base || "middle",
+  });
+  if (opcoes.peso) t.setAttribute("font-weight", opcoes.peso);
+  t.textContent = conteudo;
+  return t;
+}
+
+/** Barras horizontais: uma barra por item, rótulo à esquerda, valor à direita. */
+function barrasHorizontais(itens, opcoes = {}) {
+  const larguraRotulo = opcoes.larguraRotulo || 150;
+  const alturaLinha = 30, largura = opcoes.largura || 860;
+  const maximo = opcoes.maximo || Math.max(...itens.map((i) => i.valor), 1);
+  const x0 = larguraRotulo + 8;
+  const larguraPlot = largura - x0 - 60;
+  const altura = itens.length * alturaLinha + 8;
+  const svg = el("svg", { width: largura, height: altura, viewBox: `0 0 ${largura} ${altura}`, role: "img" });
+
+  itens.forEach((item, i) => {
+    const y = i * alturaLinha + 8;
+    svg.appendChild(texto(larguraRotulo, y + 7, item.rotulo, { ancora: "end", cor: "--ink-1" }));
+    svg.appendChild(el("rect", {
+      x: x0, y: y, width: larguraPlot, height: 14, rx: 4, fill: cor("--grade"), opacity: 0.6,
+    }));
+    const w = Math.max((item.valor / maximo) * larguraPlot, 2);
+    const barra = el("rect", { x: x0, y: y, width: w, height: 14, rx: 4, fill: cor(item.cor || "--s1") });
+    svg.appendChild(barra);
+    svg.appendChild(texto(x0 + larguraPlot + 8, y + 7, item.texto ?? num(item.valor), { cor: "--ink-1" }));
+    ligarDica(barra, item.rotulo, item.detalhe || []);
+  });
+  return svg;
+}
+
+/** Barras empilhadas horizontais (2+ séries), com 2px de respiro entre segmentos. */
+function barrasEmpilhadas(itens, series, opcoes = {}) {
+  const larguraRotulo = opcoes.larguraRotulo || 150;
+  const alturaLinha = 32, largura = opcoes.largura || 860;
+  const x0 = larguraRotulo + 8;
+  const larguraPlot = largura - x0 - 70;
+  const maximo = Math.max(...itens.map((i) => series.reduce((s, k) => s + (i[k.chave] || 0), 0)), 1);
+  const altura = itens.length * alturaLinha + 8;
+  const svg = el("svg", { width: largura, height: altura, viewBox: `0 0 ${largura} ${altura}`, role: "img" });
+
+  itens.forEach((item, i) => {
+    const y = i * alturaLinha + 10;
+    svg.appendChild(texto(larguraRotulo, y + 7, item.rotulo, { ancora: "end", cor: "--ink-1" }));
+    let x = x0, total = 0;
+    series.forEach((serie, indice) => {
+      const valor = item[serie.chave] || 0;
+      total += valor;
+      const w = (valor / maximo) * larguraPlot;
+      if (w <= 0) return;
+      const segmento = el("rect", {
+        x, y, width: Math.max(w - (indice < series.length - 1 ? 2 : 0), 1),
+        height: 14, rx: 4, fill: cor(serie.cor),
+      });
+      svg.appendChild(segmento);
+      ligarDica(segmento, item.rotulo, [serie.rotulo + ": " + horas(valor)]);
+      x += w;
+    });
+    svg.appendChild(texto(x0 + larguraPlot + 8, y + 7, horas(total), { cor: "--ink-1" }));
+  });
+  return svg;
+}
+
+/** Linhas ao longo do tempo. series: [{rotulo, cor, pontos:[{x,y}]}] */
+function linhas(rotulosX, series, opcoes = {}) {
+  const largura = opcoes.largura || 860, altura = opcoes.altura || 260;
+  const m = { topo: 16, dir: 16, base: 34, esq: 52 };
+  const larguraPlot = largura - m.esq - m.dir, alturaPlot = altura - m.topo - m.base;
+  const valores = series.flatMap((s) => s.pontos.map((p) => p.y)).filter((v) => v !== null);
+  const maximo = opcoes.maximo ?? Math.max(...valores, 1);
+  const svg = el("svg", { width: largura, height: altura, viewBox: `0 0 ${largura} ${altura}`, role: "img" });
+
+  for (let i = 0; i <= 4; i++) {
+    const y = m.topo + (alturaPlot / 4) * i;
+    svg.appendChild(el("line", { x1: m.esq, y1: y, x2: largura - m.dir, y2: y, stroke: cor("--grade"), "stroke-width": 1 }));
+    svg.appendChild(texto(m.esq - 8, y, num(maximo - (maximo / 4) * i, opcoes.casas ?? 0), { ancora: "end", cor: "--ink-3", tamanho: 11 }));
+  }
+  const px = (i) => rotulosX.length === 1 ? m.esq + larguraPlot / 2 : m.esq + (larguraPlot / (rotulosX.length - 1)) * i;
+  const py = (v) => m.topo + alturaPlot - (v / maximo) * alturaPlot;
+
+  rotulosX.forEach((rotulo, i) => {
+    if (rotulosX.length > 8 && i % Math.ceil(rotulosX.length / 8) !== 0) return;
+    const ancora = i === 0 ? "start" : (i === rotulosX.length - 1 ? "end" : "middle");
+    svg.appendChild(texto(px(i), altura - 14, rotulo, { ancora, cor: "--ink-3", tamanho: 11 }));
+  });
+
+  series.forEach((serie) => {
+    const d = serie.pontos
+      .map((p, i) => (p.y === null ? null : `${i === 0 ? "M" : "L"}${px(p.x)},${py(p.y)}`))
+      .filter(Boolean).join(" ");
+    svg.appendChild(el("path", { d, fill: "none", stroke: cor(serie.cor), "stroke-width": 2, "stroke-linejoin": "round" }));
+    serie.pontos.forEach((p, i) => {
+      if (p.y === null) return;
+      const marcador = el("circle", {
+        cx: px(p.x), cy: py(p.y), r: 4.5, fill: cor(serie.cor),
+        stroke: cor("--superficie"), "stroke-width": 2,
+      });
+      svg.appendChild(marcador);
+      ligarDica(marcador, serie.rotulo, [rotulosX[i] + ": " + (opcoes.formato ? opcoes.formato(p.y) : num(p.y))]);
+    });
+  });
+  return svg;
+}
+
+/** Matriz marca x etapa com ramp sequencial de uma cor só. */
+function matriz(marcas, etapas, obter) {
+  const larguraRotulo = 150, larguraCelula = 150, alturaCelula = 34;
+  const largura = larguraRotulo + etapas.length * larguraCelula;
+  const altura = marcas.length * alturaCelula + 44;
+  const svg = el("svg", { width: largura, height: altura, viewBox: `0 0 ${largura} ${altura}`, role: "img" });
+
+  etapas.forEach((etapa, c) => {
+    const rotulo = etapa.rotulo.length > 20 ? etapa.rotulo.slice(0, 19) + "…" : etapa.rotulo;
+    svg.appendChild(texto(larguraRotulo + c * larguraCelula + larguraCelula / 2, 18, rotulo,
+      { ancora: "middle", cor: "--ink-3", tamanho: 11 }));
+  });
+
+  marcas.forEach((marca, l) => {
+    const y = 34 + l * alturaCelula;
+    svg.appendChild(texto(larguraRotulo - 10, y + alturaCelula / 2, marca, { ancora: "end", cor: "--ink-1" }));
+    etapas.forEach((etapa, c) => {
+      const dado = obter(marca, etapa.chave);
+      const x = larguraRotulo + c * larguraCelula;
+      const valor = dado ? dado.score : null;
+      const indice = valor === null ? -1 : Math.min(Math.floor(valor / 17), 5);
+      const celula = el("rect", {
+        x: x + 2, y: y + 2, width: larguraCelula - 4, height: alturaCelula - 4, rx: 5,
+        fill: valor === null ? cor("--grade") : cor(SEQ[indice]),
+      });
+      svg.appendChild(celula);
+      svg.appendChild(texto(x + larguraCelula / 2, y + alturaCelula / 2,
+        valor === null ? "—" : num(valor) + "%",
+        { ancora: "middle", cor: indice >= 4 ? "--superficie" : "--ink-1", peso: 500 }));
+      if (dado) {
+        ligarDica(celula, marca + " · " + etapa.rotulo, [
+          "Autonomia: " + num(dado.score) + "%",
+          dado.autonomos + " de " + dado.total + " execuções feitas pela marca",
+          dado.desconhecidos ? dado.desconhecidos + " execução(ões) sem executor identificado" : "",
+        ].filter(Boolean));
+      }
+    });
+  });
+  return svg;
+}
+
+function cartao(titulo, subtitulo, ...conteudos) {
+  const div = document.createElement("div");
+  div.className = "cartao";
+  div.innerHTML = "<h2>" + esc(titulo) + "</h2>" + (subtitulo ? '<p class="sub">' + esc(subtitulo) + "</p>" : "");
+  conteudos.forEach((c) => {
+    if (typeof c === "string") { const w = document.createElement("div"); w.innerHTML = c; div.appendChild(w); }
+    else if (c) { const w = document.createElement("div"); w.className = "grafico"; w.appendChild(c); div.appendChild(w); }
+  });
+  return div;
+}
+
+function legenda(itens) {
+  return '<div class="legenda">' + itens.map((i) =>
+    '<span><i class="swatch" style="background:' + cor(i.cor) + '"></i>' + esc(i.rotulo) + "</span>"
+  ).join("") + "</div>";
+}
+
+function tabela(colunas, linhasDados) {
+  const cabecalho = colunas.map((c) => '<th class="' + (c.num ? "num" : "") + '">' + esc(c.rotulo) + "</th>").join("");
+  const corpo = linhasDados.map((linha) =>
+    "<tr>" + colunas.map((c) => '<td class="' + (c.num ? "num" : "") + '">' + (c.html ? c.html(linha) : esc(linha[c.chave] ?? "—")) + "</td>").join("") + "</tr>"
+  ).join("");
+  return "<table><thead><tr>" + cabecalho + "</tr></thead><tbody>" + corpo + "</tbody></table>";
+}
+
+function kpis(itens) {
+  return '<div class="kpis">' + itens.map((i) =>
+    '<div class="kpi"><div class="rotulo">' + esc(i.rotulo) + '</div><div class="valor">' + esc(i.valor) +
+    '</div>' + (i.nota ? '<div class="nota">' + esc(i.nota) + "</div>" : "") + "</div>"
+  ).join("") + "</div>";
+}
+
+// ------------------------------------------------------------------- abas
+function renderAutonomia(dados) {
+  const alvo = document.getElementById("aba-autonomia");
+  alvo.innerHTML = "";
+  const status = dados.status_atual || [];
+  const detalhes = dados.detalhes || [];
+
+  if (!status.length) {
+    alvo.innerHTML = '<div class="aviso">Ainda não há dados de autonomia. Rode <code>autonomia-marcas executar</code>.</div>';
+    return;
+  }
+
+  const media = status.reduce((s, m) => s + m.score_geral, 0) / status.length;
+  const conta = (c) => status.filter((m) => m.classificacao === c).length;
+  alvo.insertAdjacentHTML("beforeend", kpis([
+    { rotulo: "Marcas medidas", valor: status.length },
+    { rotulo: "Score médio", valor: num(media) + "%" },
+    { rotulo: "Autônomas", valor: conta("Autônomo"), nota: "≥ 90%" },
+    { rotulo: "Parcialmente", valor: conta("Parcialmente autônomo"), nota: "50% a 89%" },
+    { rotulo: "Em treinamento", valor: conta("Em treinamento/suporte"), nota: "< 50%" },
+  ]));
+
+  const barras = barrasHorizontais(status.map((m) => ({
+    rotulo: m.marca,
+    valor: m.score_geral,
+    texto: num(m.score_geral) + "%",
+    cor: corDaClassificacao(m.classificacao),
+    detalhe: [m.classificacao, m.total_eventos + " execuções em " + m.etapas_medidas + " etapa(s)"],
+  })), { maximo: 100 });
+
+  alvo.appendChild(cartao(
+    "Score geral por marca",
+    "Média simples das quatro etapas. A cor repete a classificação da tabela abaixo.",
+    legenda([
+      { cor: "--bom", rotulo: "● Autônomo (≥90%)" },
+      { cor: "--atencao", rotulo: "◐ Parcialmente autônomo (50–89%)" },
+      { cor: "--critico", rotulo: "○ Em treinamento/suporte (<50%)" },
+    ]),
+    barras,
+  ));
+
+  const etapas = [];
+  ETAPAS_ORDEM.forEach((chave) => {
+    const achou = detalhes.find((d) => d.etapa === chave);
+    if (achou) etapas.push({ chave, rotulo: achou.rotulo_etapa });
+  });
+  detalhes.forEach((d) => {
+    if (!etapas.some((e) => e.chave === d.etapa)) etapas.push({ chave: d.etapa, rotulo: d.rotulo_etapa });
+  });
+  const porChave = new Map(detalhes.map((d) => [d.marca + "|" + d.etapa, d]));
+
+  alvo.appendChild(cartao(
+    "Autonomia por etapa",
+    "Percentual de execuções feitas pela própria marca. Mais escuro = mais autônomo.",
+    matriz(status.map((m) => m.marca), etapas, (marca, etapa) => porChave.get(marca + "|" + etapa)),
+  ));
+
+  const historico = dados.historico || [];
+  const execucoes = [...new Set(historico.map((h) => h.execucao_em))].sort();
+  if (execucoes.length > 1) {
+    const marcasGrafico = status.slice(0, 8).map((m) => m.marca);
+    const cores = ["--s1", "--s2", "--s3", "--bom", "--critico", "--atencao", "--ink-2", "--eixo"];
+    const series = marcasGrafico.map((marca, i) => ({
+      rotulo: marca, cor: cores[i % cores.length],
+      pontos: execucoes.map((quando, indice) => {
+        const linhasMarca = historico.filter((h) => h.execucao_em === quando && h.marca === marca);
+        const y = linhasMarca.length
+          ? linhasMarca.reduce((s, l) => s + l.score, 0) / linhasMarca.length : null;
+        return { x: indice, y };
+      }),
+    }));
+    alvo.appendChild(cartao(
+      "Evolução do score",
+      "Uma linha por marca, um ponto por execução do pipeline.",
+      legenda(series.map((s) => ({ cor: s.cor, rotulo: s.rotulo }))),
+      linhas(execucoes.map((e) => e.slice(0, 10)), series, { maximo: 100, formato: (v) => num(v) + "%" }),
+    ));
+  }
+
+  alvo.appendChild(cartao("Detalhe por marca e etapa", "Mesmos números do status_atual.xlsx.", tabela([
+    { rotulo: "Marca", chave: "marca" },
+    { rotulo: "Etapa", chave: "rotulo_etapa" },
+    { rotulo: "Execuções", chave: "total", num: true },
+    { rotulo: "Pela marca", chave: "autonomos", num: true },
+    { rotulo: "Pelo time interno", chave: "internos", num: true },
+    { rotulo: "Sem executor", chave: "desconhecidos", num: true },
+    { rotulo: "Autonomia", num: true, html: (l) => num(l.score) + "%" },
+  ], detalhes)));
+}
+
+function renderBackoffice(dados) {
+  const alvo = document.getElementById("aba-backoffice");
+  alvo.innerHTML = "";
+  const bo = dados.backoffice || {};
+
+  if (!bo.total_notas) {
+    alvo.innerHTML = '<div class="aviso">Ainda não há notas fiscais no período consultado.</div>';
+    return;
+  }
+
+  alvo.insertAdjacentHTML("beforeend", kpis([
+    { rotulo: "NFs no período", valor: bo.total_notas },
+    { rotulo: "Aprovadas", valor: bo.aprovadas },
+    { rotulo: "Na fila", valor: bo.pendentes, nota: "ainda sem aprovação" },
+    { rotulo: "Tempo médio total", valor: horas(bo.media_total_horas), nota: "envio → aprovação" },
+  ]));
+
+  const pernas = (bo.por_perna || []).filter((p) => p.perna !== "total");
+  alvo.appendChild(cartao(
+    "Tempo por etapa da aprovação",
+    "Média, mediana e p90 em horas corridas. O p90 mostra a cauda: 10% das notas demoram mais que isso.",
+    legenda([{ cor: "--s1", rotulo: "Média" }, { cor: "--s2", rotulo: "Mediana" }, { cor: "--s3", rotulo: "p90" }]),
+    barrasHorizontais(pernas.flatMap((p) => [
+      { rotulo: p.rotulo + " · média", valor: p.media_horas || 0, texto: horas(p.media_horas), cor: "--s1", detalhe: [p.amostras + " notas"] },
+      { rotulo: "mediana", valor: p.mediana_horas || 0, texto: horas(p.mediana_horas), cor: "--s2", detalhe: [p.rotulo] },
+      { rotulo: "p90", valor: p.p90_horas || 0, texto: horas(p.p90_horas), cor: "--s3", detalhe: [p.rotulo] },
+    ]), { larguraRotulo: 250 }),
+  ));
+
+  const ranking = (bo.ranking_marcas || []).slice(0, 12);
+  if (ranking.length) {
+    alvo.appendChild(cartao(
+      "Marcas que mais demoram até a aprovação",
+      "Tempo médio do envio da NF até a aprovação, quebrado nas duas pernas. Mínimo de 3 notas aprovadas por marca.",
+      legenda([
+        { cor: "--s1", rotulo: "Envio → avaliação" },
+        { cor: "--s2", rotulo: "Avaliação → aprovação" },
+      ]),
+      barrasEmpilhadas(
+        ranking.map((m) => ({
+          rotulo: m.marca,
+          envio: m.media_envio_avaliacao || 0,
+          aprovacao: m.media_avaliacao_aprovacao || 0,
+        })),
+        [
+          { chave: "envio", rotulo: "Envio → avaliação", cor: "--s1" },
+          { chave: "aprovacao", rotulo: "Avaliação → aprovação", cor: "--s2" },
+        ],
+      ),
+    ));
+  }
+
+  const fila = bo.fila || [];
+  if (fila.length) {
+    alvo.appendChild(cartao(
+      "Fila atual por status",
+      "Notas ainda sem data de aprovação, e há quanto tempo estão paradas.",
+      barrasHorizontais(fila.map((f) => ({
+        rotulo: f.status, valor: f.quantidade, texto: f.quantidade + " NFs",
+        cor: f.media_horas_parada > 168 ? "--critico" : (f.media_horas_parada > 72 ? "--atencao" : "--s1"),
+        detalhe: ["Parada em média " + horas(f.media_horas_parada), "Maior espera: " + horas(f.maior_espera_horas)],
+      })), { larguraRotulo: 160 }),
+      tabela([
+        { rotulo: "Status", chave: "status" },
+        { rotulo: "NFs paradas", chave: "quantidade", num: true },
+        { rotulo: "Espera média", num: true, html: (l) => horas(l.media_horas_parada) },
+        { rotulo: "Maior espera", num: true, html: (l) => horas(l.maior_espera_horas) },
+      ], fila),
+    ));
+  }
+
+  const evolucao = bo.evolucao || [];
+  if (evolucao.length > 1) {
+    alvo.appendChild(cartao(
+      "Evolução do tempo de aprovação",
+      "Média por mês de envio da NF. Caindo = backoffice melhorando.",
+      legenda([
+        { cor: "--s1", rotulo: "Total (envio → aprovação)" },
+        { cor: "--s2", rotulo: "Envio → avaliação" },
+        { cor: "--s3", rotulo: "Avaliação → aprovação" },
+      ]),
+      linhas(evolucao.map((e) => e.mes), [
+        { rotulo: "Total", cor: "--s1", pontos: evolucao.map((e, i) => ({ x: i, y: e.media_total_horas })) },
+        { rotulo: "Envio → avaliação", cor: "--s2", pontos: evolucao.map((e, i) => ({ x: i, y: e.media_envio_avaliacao })) },
+        { rotulo: "Avaliação → aprovação", cor: "--s3", pontos: evolucao.map((e, i) => ({ x: i, y: e.media_avaliacao_aprovacao })) },
+      ], { formato: horas }),
+    ));
+  }
+
+  if (ranking.length) {
+    alvo.appendChild(cartao("Tabela do ranking", "", tabela([
+      { rotulo: "Marca", chave: "marca" },
+      { rotulo: "NFs aprovadas", chave: "notas_aprovadas", num: true },
+      { rotulo: "Média total", num: true, html: (l) => horas(l.media_total_horas) },
+      { rotulo: "Mediana total", num: true, html: (l) => horas(l.mediana_total_horas) },
+      { rotulo: "Envio → avaliação", num: true, html: (l) => horas(l.media_envio_avaliacao) },
+      { rotulo: "Avaliação → aprovação", num: true, html: (l) => horas(l.media_avaliacao_aprovacao) },
+    ], bo.ranking_marcas)));
+  }
+}
+
+// ------------------------------------------------------------------ início
+document.querySelectorAll(".abas button").forEach((botao) => {
+  botao.addEventListener("click", () => {
+    document.querySelectorAll(".abas button").forEach((b) => b.setAttribute("aria-selected", String(b === botao)));
+    document.getElementById("aba-autonomia").classList.toggle("oculto", botao.dataset.aba !== "autonomia");
+    document.getElementById("aba-backoffice").classList.toggle("oculto", botao.dataset.aba !== "backoffice");
+  });
+});
+
+async function carregar() {
+  try {
+    const resposta = await fetch(FONTE + "?t=" + Date.now());
+    if (!resposta.ok) throw new Error("HTTP " + resposta.status);
+    const dados = await resposta.json();
+    const quando = new Date(dados.atualizado_em);
+    document.getElementById("atualizado").textContent =
+      "Atualizado em " + quando.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
+    renderAutonomia(dados);
+    renderBackoffice(dados);
+  } catch (erro) {
+    document.getElementById("atualizado").textContent = "Não foi possível carregar os dados.";
+    document.getElementById("aba-autonomia").innerHTML =
+      '<div class="aviso">Não consegui ler <code>' + FONTE + '</code> (' + esc(erro.message) +
+      '). Se você abriu este arquivo com duplo clique, o navegador bloqueia a leitura do JSON — use a URL do GitHub Pages ou rode <code>python -m http.server</code> na pasta docs.</div>';
+  }
+}
+carregar();
+</script>
+</body>
+</html>

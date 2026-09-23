@@ -1,0 +1,4 @@
+# Um Id de usuário do Salesforce ou um e-mail por linha.
+# Usado apenas quando MODO_AUTONOMIA=lista.
+# backoffice@privalia.com
+# 005XXXXXXXXXXXXXXX
