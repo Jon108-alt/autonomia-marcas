@@ -1,0 +1,79 @@
+name: Atualizar painel
+
+# Roda todo dia às 08:00 de Brasília (11:00 UTC) e também sob demanda
+# pelo botão "Run workflow" na aba Actions.
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-painel
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    env:
+      # --- segredos (Settings > Secrets and variables > Actions > Secrets) ---
+      SF_DOMAIN: ${{ secrets.SF_DOMAIN }}
+      SF_CLIENT_ID: ${{ secrets.SF_CLIENT_ID }}
+      SF_CLIENT_SECRET: ${{ secrets.SF_CLIENT_SECRET }}
+      SF_USERNAME: ${{ secrets.SF_USERNAME }}
+      SF_PASSWORD: ${{ secrets.SF_PASSWORD }}
+      SF_SECURITY_TOKEN: ${{ secrets.SF_SECURITY_TOKEN }}
+      # --- variáveis não sensíveis (aba Variables, ao lado de Secrets) ---
+      SF_AUTH_MODE: ${{ vars.SF_AUTH_MODE || 'client_credentials' }}
+      SF_API_VERSION: ${{ vars.SF_API_VERSION || 'v61.0' }}
+      SF_OBJETO: ${{ vars.SF_OBJETO || 'OrderExportReport__c' }}
+      SF_CAMPO_MARCA: ${{ vars.SF_CAMPO_MARCA || 'Brand__c' }}
+      SF_CAMPO_ID_PEDIDO: ${{ vars.SF_CAMPO_ID_PEDIDO || 'Name' }}
+      SF_CAMPO_STATUS_NF: ${{ vars.SF_CAMPO_STATUS_NF || 'InvoiceStatus__c' }}
+      SF_CAMPO_NF_ENVIADA: ${{ vars.SF_CAMPO_NF_ENVIADA || 'NFSentDate__c' }}
+      SF_CAMPO_AVALIACAO: ${{ vars.SF_CAMPO_AVALIACAO || 'EvaluationDate__c' }}
+      SF_CAMPO_APROVACAO: ${{ vars.SF_CAMPO_APROVACAO || 'InvoiceapprovalDate__c' }}
+      SF_ETAPAS: ${{ vars.SF_ETAPAS }}
+      MODO_AUTONOMIA: ${{ vars.MODO_AUTONOMIA || 'dominio' }}
+      DOMINIOS_INTERNOS: ${{ vars.DOMINIOS_INTERNOS || 'privalia.com,veepee.com' }}
+      PERFIS_INTERNOS: ${{ vars.PERFIS_INTERNOS }}
+      DATA_INICIO_PADRAO: ${{ vars.DATA_INICIO_PADRAO || '2026-08-01' }}
+      # dados/ é versionado para o histórico acumular entre execuções
+      OUTPUT_DIR: dados
+      DOCS_DIR: docs
+      # Enquanto o Salesforce não liberar o acesso, coloque MODO_DEMO=1 em
+      # Variables para o painel subir com dados fictícios.
+      MODO_DEMO: ${{ vars.MODO_DEMO || '0' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Instalar a aplicação
+        run: pip install -e .
+
+      - name: Gerar o painel
+        run: |
+          if [ "$MODO_DEMO" = "1" ]; then
+            autonomia-marcas executar --demo
+          else
+            autonomia-marcas executar
+          fi
+
+      - name: Publicar os dados atualizados
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/dashboard.json dados/
+          if git diff --staged --quiet; then
+            echo "Nada mudou hoje."
+          else
+            git commit -m "Atualiza painel ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi
