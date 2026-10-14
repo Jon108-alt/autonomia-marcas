@@ -503,3 +503,27 @@ execucao_em,marca,etapa,rotulo_etapa,total,autonomos,score
 2026-10-13T11:08:55.123801+00:00,Fluxo Denim,atualizacao_status,Atualização do status,79,58,73.4
 2026-10-13T11:08:55.123801+00:00,Fluxo Denim,recebimento_po,Recebimento/confirmação do PO,83,72,86.7
 2026-10-13T11:08:55.123801+00:00,Fluxo Denim,upload_nf,Upload da nota fiscal,74,49,66.2
+2026-10-14T11:19:07.440204+00:00,Alpha Moda,agendamento_coleta,Agendamento da coleta,49,47,95.9
+2026-10-14T11:19:07.440204+00:00,Alpha Moda,atualizacao_status,Atualização do status,72,70,97.2
+2026-10-14T11:19:07.440204+00:00,Alpha Moda,recebimento_po,Recebimento/confirmação do PO,81,76,93.8
+2026-10-14T11:19:07.440204+00:00,Alpha Moda,upload_nf,Upload da nota fiscal,56,53,94.6
+2026-10-14T11:19:07.440204+00:00,Bravo Casa,agendamento_coleta,Agendamento da coleta,60,50,83.3
+2026-10-14T11:19:07.440204+00:00,Bravo Casa,atualizacao_status,Atualização do status,81,69,85.2
+2026-10-14T11:19:07.440204+00:00,Bravo Casa,recebimento_po,Recebimento/confirmação do PO,91,70,76.9
+2026-10-14T11:19:07.440204+00:00,Bravo Casa,upload_nf,Upload da nota fiscal,71,60,84.5
+2026-10-14T11:19:07.440204+00:00,Cedro Kids,agendamento_coleta,Agendamento da coleta,51,32,62.7
+2026-10-14T11:19:07.440204+00:00,Cedro Kids,atualizacao_status,Atualização do status,70,37,52.9
+2026-10-14T11:19:07.440204+00:00,Cedro Kids,recebimento_po,Recebimento/confirmação do PO,80,51,63.7
+2026-10-14T11:19:07.440204+00:00,Cedro Kids,upload_nf,Upload da nota fiscal,60,39,65.0
+2026-10-14T11:19:07.440204+00:00,Delta Sports,agendamento_coleta,Agendamento da coleta,69,25,36.2
+2026-10-14T11:19:07.440204+00:00,Delta Sports,atualizacao_status,Atualização do status,88,40,45.5
+2026-10-14T11:19:07.440204+00:00,Delta Sports,recebimento_po,Recebimento/confirmação do PO,105,50,47.6
+2026-10-14T11:19:07.440204+00:00,Delta Sports,upload_nf,Upload da nota fiscal,75,37,49.3
+2026-10-14T11:19:07.440204+00:00,Eterna Beleza,agendamento_coleta,Agendamento da coleta,48,13,27.1
+2026-10-14T11:19:07.440204+00:00,Eterna Beleza,atualizacao_status,Atualização do status,67,19,28.4
+2026-10-14T11:19:07.440204+00:00,Eterna Beleza,recebimento_po,Recebimento/confirmação do PO,77,23,29.9
+2026-10-14T11:19:07.440204+00:00,Eterna Beleza,upload_nf,Upload da nota fiscal,57,12,21.1
+2026-10-14T11:19:07.440204+00:00,Fluxo Denim,agendamento_coleta,Agendamento da coleta,67,47,70.1
+2026-10-14T11:19:07.440204+00:00,Fluxo Denim,atualizacao_status,Atualização do status,82,60,73.2
+2026-10-14T11:19:07.440204+00:00,Fluxo Denim,recebimento_po,Recebimento/confirmação do PO,86,72,83.7
+2026-10-14T11:19:07.440204+00:00,Fluxo Denim,upload_nf,Upload da nota fiscal,77,50,64.9
