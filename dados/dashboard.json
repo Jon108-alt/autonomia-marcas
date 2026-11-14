@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-11-13T18:18:14.048868+00:00",
+  "atualizado_em": "2026-11-14T16:47:44.299409+00:00",
   "status_atual": [
     {
       "marca": "Alpha Moda",
@@ -10,7 +10,7 @@
     },
     {
       "marca": "Bravo Casa",
-      "score_geral": 81.9,
+      "score_geral": 82.2,
       "classificacao": "Parcialmente autônomo",
       "etapas_medidas": 4,
       "total_eventos": 297
@@ -20,7 +20,7 @@
       "score_geral": 73.9,
       "classificacao": "Parcialmente autônomo",
       "etapas_medidas": 4,
-      "total_eventos": 295
+      "total_eventos": 299
     },
     {
       "marca": "Cedro Kids",
@@ -31,10 +31,10 @@
     },
     {
       "marca": "Delta Sports",
-      "score_geral": 46.6,
+      "score_geral": 46.5,
       "classificacao": "Em treinamento/suporte",
       "etapas_medidas": 4,
-      "total_eventos": 301
+      "total_eventos": 304
     },
     {
       "marca": "Eterna Beleza",
@@ -100,10 +100,10 @@
       "etapa": "atualizacao_status",
       "rotulo_etapa": "Atualização do status",
       "total": 80,
-      "autonomos": 61,
-      "internos": 19,
+      "autonomos": 62,
+      "internos": 18,
       "desconhecidos": 0,
-      "score": 76.2
+      "score": 77.5
     },
     {
       "marca": "Bravo Casa",
@@ -169,11 +169,11 @@
       "marca": "Delta Sports",
       "etapa": "agendamento_coleta",
       "rotulo_etapa": "Agendamento da coleta",
-      "total": 62,
+      "total": 63,
       "autonomos": 27,
-      "internos": 35,
+      "internos": 36,
       "desconhecidos": 0,
-      "score": 43.5
+      "score": 42.9
     },
     {
       "marca": "Delta Sports",
@@ -189,21 +189,21 @@
       "marca": "Delta Sports",
       "etapa": "recebimento_po",
       "rotulo_etapa": "Recebimento/confirmação do PO",
-      "total": 90,
+      "total": 91,
       "autonomos": 43,
-      "internos": 47,
+      "internos": 48,
       "desconhecidos": 0,
-      "score": 47.8
+      "score": 47.3
     },
     {
       "marca": "Delta Sports",
       "etapa": "upload_nf",
       "rotulo_etapa": "Upload da nota fiscal",
-      "total": 69,
-      "autonomos": 31,
+      "total": 70,
+      "autonomos": 32,
       "internos": 38,
       "desconhecidos": 0,
-      "score": 44.9
+      "score": 45.7
     },
     {
       "marca": "Eterna Beleza",
@@ -249,41 +249,41 @@
       "marca": "Fluxo Denim",
       "etapa": "agendamento_coleta",
       "rotulo_etapa": "Agendamento da coleta",
-      "total": 61,
-      "autonomos": 45,
+      "total": 62,
+      "autonomos": 46,
       "internos": 16,
       "desconhecidos": 0,
-      "score": 73.8
+      "score": 74.2
     },
     {
       "marca": "Fluxo Denim",
       "etapa": "atualizacao_status",
       "rotulo_etapa": "Atualização do status",
-      "total": 78,
+      "total": 79,
       "autonomos": 58,
-      "internos": 20,
+      "internos": 21,
       "desconhecidos": 0,
-      "score": 74.4
+      "score": 73.4
     },
     {
       "marca": "Fluxo Denim",
       "etapa": "recebimento_po",
       "rotulo_etapa": "Recebimento/confirmação do PO",
-      "total": 87,
-      "autonomos": 69,
+      "total": 88,
+      "autonomos": 70,
       "internos": 18,
       "desconhecidos": 0,
-      "score": 79.3
+      "score": 79.5
     },
     {
       "marca": "Fluxo Denim",
       "etapa": "upload_nf",
       "rotulo_etapa": "Upload da nota fiscal",
-      "total": 69,
-      "autonomos": 47,
+      "total": 70,
+      "autonomos": 48,
       "internos": 22,
       "desconhecidos": 0,
-      "score": 68.1
+      "score": 68.6
     }
   ],
   "historico": [
@@ -11518,37 +11518,253 @@
       "total": 69,
       "autonomos": 47,
       "score": 68.1
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Alpha Moda",
+      "etapa": "agendamento_coleta",
+      "rotulo_etapa": "Agendamento da coleta",
+      "total": 67,
+      "autonomos": 63,
+      "score": 94.0
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Alpha Moda",
+      "etapa": "atualizacao_status",
+      "rotulo_etapa": "Atualização do status",
+      "total": 81,
+      "autonomos": 78,
+      "score": 96.3
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Alpha Moda",
+      "etapa": "recebimento_po",
+      "rotulo_etapa": "Recebimento/confirmação do PO",
+      "total": 94,
+      "autonomos": 88,
+      "score": 93.6
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Alpha Moda",
+      "etapa": "upload_nf",
+      "rotulo_etapa": "Upload da nota fiscal",
+      "total": 73,
+      "autonomos": 68,
+      "score": 93.2
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Bravo Casa",
+      "etapa": "agendamento_coleta",
+      "rotulo_etapa": "Agendamento da coleta",
+      "total": 55,
+      "autonomos": 47,
+      "score": 85.5
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Bravo Casa",
+      "etapa": "atualizacao_status",
+      "rotulo_etapa": "Atualização do status",
+      "total": 80,
+      "autonomos": 62,
+      "score": 77.5
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Bravo Casa",
+      "etapa": "recebimento_po",
+      "rotulo_etapa": "Recebimento/confirmação do PO",
+      "total": 92,
+      "autonomos": 75,
+      "score": 81.5
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Bravo Casa",
+      "etapa": "upload_nf",
+      "rotulo_etapa": "Upload da nota fiscal",
+      "total": 70,
+      "autonomos": 59,
+      "score": 84.3
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Cedro Kids",
+      "etapa": "agendamento_coleta",
+      "rotulo_etapa": "Agendamento da coleta",
+      "total": 54,
+      "autonomos": 31,
+      "score": 57.4
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Cedro Kids",
+      "etapa": "atualizacao_status",
+      "rotulo_etapa": "Atualização do status",
+      "total": 68,
+      "autonomos": 43,
+      "score": 63.2
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Cedro Kids",
+      "etapa": "recebimento_po",
+      "rotulo_etapa": "Recebimento/confirmação do PO",
+      "total": 75,
+      "autonomos": 48,
+      "score": 64.0
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Cedro Kids",
+      "etapa": "upload_nf",
+      "rotulo_etapa": "Upload da nota fiscal",
+      "total": 62,
+      "autonomos": 35,
+      "score": 56.5
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Delta Sports",
+      "etapa": "agendamento_coleta",
+      "rotulo_etapa": "Agendamento da coleta",
+      "total": 63,
+      "autonomos": 27,
+      "score": 42.9
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Delta Sports",
+      "etapa": "atualizacao_status",
+      "rotulo_etapa": "Atualização do status",
+      "total": 80,
+      "autonomos": 40,
+      "score": 50.0
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Delta Sports",
+      "etapa": "recebimento_po",
+      "rotulo_etapa": "Recebimento/confirmação do PO",
+      "total": 91,
+      "autonomos": 43,
+      "score": 47.3
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Delta Sports",
+      "etapa": "upload_nf",
+      "rotulo_etapa": "Upload da nota fiscal",
+      "total": 70,
+      "autonomos": 32,
+      "score": 45.7
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Eterna Beleza",
+      "etapa": "agendamento_coleta",
+      "rotulo_etapa": "Agendamento da coleta",
+      "total": 52,
+      "autonomos": 17,
+      "score": 32.7
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Eterna Beleza",
+      "etapa": "atualizacao_status",
+      "rotulo_etapa": "Atualização do status",
+      "total": 65,
+      "autonomos": 12,
+      "score": 18.5
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Eterna Beleza",
+      "etapa": "recebimento_po",
+      "rotulo_etapa": "Recebimento/confirmação do PO",
+      "total": 77,
+      "autonomos": 19,
+      "score": 24.7
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Eterna Beleza",
+      "etapa": "upload_nf",
+      "rotulo_etapa": "Upload da nota fiscal",
+      "total": 58,
+      "autonomos": 14,
+      "score": 24.1
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Fluxo Denim",
+      "etapa": "agendamento_coleta",
+      "rotulo_etapa": "Agendamento da coleta",
+      "total": 62,
+      "autonomos": 46,
+      "score": 74.2
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Fluxo Denim",
+      "etapa": "atualizacao_status",
+      "rotulo_etapa": "Atualização do status",
+      "total": 79,
+      "autonomos": 58,
+      "score": 73.4
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Fluxo Denim",
+      "etapa": "recebimento_po",
+      "rotulo_etapa": "Recebimento/confirmação do PO",
+      "total": 88,
+      "autonomos": 70,
+      "score": 79.5
+    },
+    {
+      "execucao_em": "2026-11-14T16:47:44.299409+00:00",
+      "marca": "Fluxo Denim",
+      "etapa": "upload_nf",
+      "rotulo_etapa": "Upload da nota fiscal",
+      "total": 70,
+      "autonomos": 48,
+      "score": 68.6
     }
   ],
   "backoffice": {
-    "total_notas": 401,
-    "aprovadas": 313,
-    "pendentes": 88,
-    "media_total_horas": 92.85,
+    "total_notas": 403,
+    "aprovadas": 314,
+    "pendentes": 89,
+    "media_total_horas": 92.95,
     "por_perna": [
       {
         "perna": "envio_para_avaliacao",
         "rotulo": "Envio da NF → início da avaliação",
-        "amostras": 401,
-        "media_horas": 33.66,
+        "amostras": 403,
+        "media_horas": 33.84,
         "mediana_horas": 32.96,
-        "p90_horas": 60.8
+        "p90_horas": 61.04
       },
       {
         "perna": "avaliacao_para_aprovacao",
         "rotulo": "Avaliação → aprovação da NF",
-        "amostras": 313,
-        "media_horas": 59.44,
-        "mediana_horas": 52.24,
-        "p90_horas": 113.44
+        "amostras": 314,
+        "media_horas": 59.29,
+        "mediana_horas": 52.42,
+        "p90_horas": 113.42
       },
       {
         "perna": "total",
         "rotulo": "Total: envio → aprovação",
-        "amostras": 313,
-        "media_horas": 92.85,
-        "mediana_horas": 85.2,
-        "p90_horas": 149.7
+        "amostras": 314,
+        "media_horas": 92.95,
+        "mediana_horas": 85.25,
+        "p90_horas": 149.66
       }
     ],
     "ranking_marcas": [
@@ -11562,93 +11778,93 @@
       },
       {
         "marca": "Delta Sports",
-        "notas_aprovadas": 55,
-        "media_total_horas": 118.76,
-        "mediana_total_horas": 110.65,
-        "media_envio_avaliacao": 39.06,
-        "media_avaliacao_aprovacao": 79.69
+        "notas_aprovadas": 56,
+        "media_total_horas": 118.2,
+        "mediana_total_horas": 110.0,
+        "media_envio_avaliacao": 39.79,
+        "media_avaliacao_aprovacao": 78.42
       },
       {
         "marca": "Cedro Kids",
-        "notas_aprovadas": 49,
-        "media_total_horas": 93.56,
-        "mediana_total_horas": 84.15,
-        "media_envio_avaliacao": 33.35,
-        "media_avaliacao_aprovacao": 60.21
+        "notas_aprovadas": 50,
+        "media_total_horas": 94.2,
+        "mediana_total_horas": 85.18,
+        "media_envio_avaliacao": 33.27,
+        "media_avaliacao_aprovacao": 60.93
       },
       {
         "marca": "Fluxo Denim",
-        "notas_aprovadas": 51,
-        "media_total_horas": 83.76,
-        "mediana_total_horas": 84.46,
-        "media_envio_avaliacao": 28.58,
-        "media_avaliacao_aprovacao": 55.17
+        "notas_aprovadas": 50,
+        "media_total_horas": 84.44,
+        "mediana_total_horas": 84.88,
+        "media_envio_avaliacao": 28.48,
+        "media_avaliacao_aprovacao": 55.96
       },
       {
         "marca": "Bravo Casa",
         "notas_aprovadas": 58,
-        "media_total_horas": 78.31,
-        "mediana_total_horas": 75.68,
-        "media_envio_avaliacao": 29.39,
-        "media_avaliacao_aprovacao": 48.92
+        "media_total_horas": 77.88,
+        "mediana_total_horas": 74.81,
+        "media_envio_avaliacao": 29.73,
+        "media_avaliacao_aprovacao": 48.15
       },
       {
         "marca": "Alpha Moda",
         "notas_aprovadas": 59,
-        "media_total_horas": 63.38,
+        "media_total_horas": 63.12,
         "mediana_total_horas": 61.89,
-        "media_envio_avaliacao": 22.44,
-        "media_avaliacao_aprovacao": 40.93
+        "media_envio_avaliacao": 22.73,
+        "media_avaliacao_aprovacao": 40.39
       }
     ],
     "fila": [
       {
         "status": "Pendente",
         "quantidade": 33,
-        "media_horas_parada": 671.89,
-        "maior_espera_horas": 2397.79
+        "media_horas_parada": 688.05,
+        "maior_espera_horas": 2420.28
+      },
+      {
+        "status": "Associado",
+        "quantidade": 28,
+        "media_horas_parada": 865.6,
+        "maior_espera_horas": 2405.04
       },
       {
         "status": "Em avaliação",
         "quantidade": 28,
-        "media_horas_parada": 714.37,
-        "maior_espera_horas": 2469.11
-      },
-      {
-        "status": "Associado",
-        "quantidade": 27,
-        "media_horas_parada": 876.84,
-        "maior_espera_horas": 2382.55
+        "media_horas_parada": 736.86,
+        "maior_espera_horas": 2491.6
       }
     ],
     "evolucao": [
       {
         "mes": "2026-08",
         "notas": 85,
-        "media_total_horas": 94.84,
-        "media_envio_avaliacao": 34.27,
-        "media_avaliacao_aprovacao": 60.57
+        "media_total_horas": 94.54,
+        "media_envio_avaliacao": 34.22,
+        "media_avaliacao_aprovacao": 60.32
       },
       {
         "mes": "2026-09",
-        "notas": 87,
-        "media_total_horas": 94.04,
-        "media_envio_avaliacao": 30.41,
-        "media_avaliacao_aprovacao": 63.63
+        "notas": 88,
+        "media_total_horas": 93.7,
+        "media_envio_avaliacao": 30.54,
+        "media_avaliacao_aprovacao": 63.16
       },
       {
         "mes": "2026-10",
         "notas": 108,
-        "media_total_horas": 94.62,
-        "media_envio_avaliacao": 36.42,
-        "media_avaliacao_aprovacao": 58.2
+        "media_total_horas": 94.68,
+        "media_envio_avaliacao": 36.87,
+        "media_avaliacao_aprovacao": 57.81
       },
       {
         "mes": "2026-11",
         "notas": 33,
-        "media_total_horas": 78.8,
-        "media_envio_avaliacao": 29.24,
-        "media_avaliacao_aprovacao": 49.57
+        "media_total_horas": 81.17,
+        "media_envio_avaliacao": 29.98,
+        "media_avaliacao_aprovacao": 51.19
       }
     ]
   }
